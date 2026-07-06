@@ -338,7 +338,7 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'ブックオフの妖精',
              'username':'@bookoff_fairy',
              'content':'半年前に買って読んでない',
-             'imageUrls':['images/IMG_4790.jpg'],
+             'imageUrls':['assets/images/IMG_4790.jpg'],
              'comments':[]
            },
            {
@@ -352,7 +352,7 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'かりんとう',
              'username':'@karintou',
              'content':'Amazonでリップ買ったらこれ',
-             'imageUrls':['images/IMG_4774.JPG'],
+             'imageUrls':['assets/images/IMG_4774.JPG'],
              'comments':[
                {
                  'name':'えびび',
@@ -393,7 +393,7 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'間こち',
              'username':'@machikochi276',
              'content':'5限の授業好きな先生なのに睡魔に勝てなくてこれ',
-             'imageUrls':['images/1772757839-WTMfo4ParYbDjxNsuRGmqI7F.webp'],
+             'imageUrls':['assets/images/1772757839-WTMfo4ParYbDjxNsuRGmqI7F.webp'],
              'comments':[
                {
                  'name':'コンフィス系しょん',
@@ -421,7 +421,7 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'さお',
              'username':'@sao_000000',
              'content':'新海誠すぎる',
-             'imageUrls':['images/IMG_4767.JPG'],
+             'imageUrls':['assets/images/IMG_4767.JPG'],
              'comments':[]
            },
            {
@@ -469,7 +469,7 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'ゆのん',
              'username':'@yunon_33',
              'content':'Tag\n依存先ください\n08/🚺/躁鬱/リスカ/OD/メンヘラ/通話△/DM◎\n#病み垢さんと繋がりたい#病み垢女子と繋がりたい#病み垢男子と繋がりたい#',
-             'imageUrls':['images/_.jpeg','images/IMG_4789.jpg'],
+             'imageUrls':['assets/images/_.jpeg','assets/images/IMG_4789.jpg'],
              'comments':[
                {
                  'name':'ウユ',
@@ -516,7 +516,7 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'きみぴ',
              'username':'@ki_mi_pi',
              'content':'置き場所ないせいで毎日起きたらこれ',
-             'imageUrls':['images/IMG_4770.JPG'],
+             'imageUrls':['assets/images/IMG_4770.JPG'],
              'comments':[
                {
                  'name':'もろこし',
@@ -530,7 +530,7 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'岡本れいな',
              'username':'@reina_okamoto000',
              'content':'cos 初出しレオ\nるりちと併せ楽しすぎた😘',
-             'imageUrls':['images/20267421_41_182.jpeg','images/20267421_41_18.jpeg'],
+             'imageUrls':['assets/images/20267421_41_182.jpeg','assets/images/20267421_41_18.jpeg'],
              'comments':[
                {
                  'name':'るり',
@@ -550,7 +550,7 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'るり',
              'username':'@luli_1015',
              'content':'cos 冴木\n\nレオくん、なんかめっちゃ怒られてるんだけど、、\n\nレオ▶︎@reina_okamoto000',
-             'imageUrls':['images/30_20260704231744.PNG','images/31_20260704232546.jpg'],
+             'imageUrls':['assets/images/30_20260704231744.PNG','assets/images/31_20260704232546.jpg'],
              'comments':[
                {
                  'name':'岡本れいな',
@@ -571,14 +571,14 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'愚者',
              'username':'@gusya_0301',
              'content':'土日体力もメンタルも限界でこれだった',
-             'imageUrls':['images/IMG_4521.JPG'],
+             'imageUrls':['assets/images/IMG_4521.JPG'],
              'comments':[]
            },
            {
              'name':'ダイラタンシー老体',
              'username':'@DKusaoy___',
              'content':'大金持ちになりたいって言ってんじゃないの。\n金曜の夜にハーゲン買って帰りたいって言ってんの。',
-             'imageUrls':['images/IMG_4786.JPG'],
+             'imageUrls':['assets/images/IMG_4786.JPG'],
              'comments':[
                {
                  'name':'ブラック漆黒',
@@ -598,7 +598,7 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'オシダ',
              'username':'@oshi_da_leo000',
              'content':'レオが刺さりすぎてる',
-             'imageUrls':['images/IMG_1246.JPG'],
+             'imageUrls':['assets/images/IMG_1246.JPG'],
              'comments':[
                {
                  'name':'ので',
@@ -612,28 +612,28 @@ class _TimelinePageState extends State<TimelinePage> {
              'name':'さおりん',
              'username':'@saorinn_flower',
              'content':'自宅のミモザが咲きました☺️今年も綺麗でいい香り✨',
-             'imageUrls':['images/IMG_3365.jpg'],
+             'imageUrls':['assets/images/IMG_3365.jpg'],
              'comments':[]
            },
            {
              'name':'なぐるんた',
              'username':'@nagulunta',
              'content':'原稿進捗　ツヤベタ最高',
-             'imageUrls':['images/IMG_3282.jpg'],
+             'imageUrls':['assets/images/IMG_3282.jpg'],
              'comments':[]
            },
            {
              'name':'era',
              'username':'@e_r_a__',
              'content':'教室に9億',
-             'imageUrls':['images/IMG_4453.jpg'],
+             'imageUrls':['assets/images/IMG_4453.jpg'],
              'comments':[]
            },
            {
              'name':'きろサイ7/5星願',
              'username':'@k_sai_sx',
              'content':'概念ネイル（とれてます）',
-             'imageUrls':['images/IMG_1312.JPG','images/IMG_1313.JPG'],
+             'imageUrls':['assets/images/IMG_1312.JPG','assets/images/IMG_1313.JPG'],
              'comments':[
                {
                  'name':'杢露',
