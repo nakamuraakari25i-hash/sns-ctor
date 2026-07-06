@@ -728,7 +728,7 @@ class _TimelinePageState extends State<TimelinePage> {
     String text = _tweets[index]['content']!;
     
     try {
-      await _flutterTts.setVolume(0.5); // 💡 一覧時は少し控えめな音量
+      await _flutterTts.setVolume(0.1); // 💡 一覧時は少し控えめな音量
     } catch (_) {}
     
     await _executeSpeak(text);
