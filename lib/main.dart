@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:html' as html;
 import 'package:flutter/foundation.dart' show debugPrint;
-import 'package:flutter/material.dart' show AppBar, Axis, BuildContext, BoxFit, CircleAvatar, Colors, Column, CrossAxisAlignment, Divider, EdgeInsets, Expanded, FontWeight, Icon, Icons, InkWell, ListView, MaterialApp, Padding, Row, Scaffold, SizedBox, Size, State, StatefulWidget, StatelessWidget, Text, TextStyle, ThemeData, Widget, runApp, IconButton, ElevatedButton, ClipRRect, Image, BorderRadius, NeverScrollableScrollPhysics;
+import 'package:flutter/material.dart' show Alignment, AppBar, Axis, BuildContext, BoxFit, CircleAvatar, Colors, Column, Container, CrossAxisAlignment, Divider, EdgeInsets, Expanded, FontWeight, Icon, Icons, InkWell, ListView, MainAxisSize, MaterialApp, Padding, Row, Scaffold, SizedBox, Size, State, StatefulWidget, StatelessWidget, Text, TextAlign, TextStyle, ThemeData, Widget, runApp, IconButton, ElevatedButton, ClipRRect, Image, BorderRadius, NeverScrollableScrollPhysics;
 
 class FlutterTts {
   Function? _completionHandler;
@@ -43,6 +43,7 @@ class FlutterTts {
     html.window.speechSynthesis?.cancel();
   }
 }
+
 
 void main() {
   runApp(const MyApp());
@@ -817,65 +818,6 @@ class _TimelinePageState extends State<TimelinePage> {
     );
   }
 
-  Widget _buildTweetCard(Map<String, dynamic> tweet) {
-    final String name = tweet['name'] ?? '';
-    final String username = tweet['username'] ?? '';
-    final String content = tweet['content'] ?? '';
-    final List<dynamic> imageUrls = tweet['imageUrls'] ?? [];
-    final String avatarText = name.isNotEmpty ? name[0] : '';
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-         Row(
-          children: [
-            Text(
-              avatarText,
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(name, style: const TextStyle(fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 2),
-                  Text(username, style: const TextStyle(color: Colors.black54)),
-                ],
-              ),
-            ),
-          ],
-        ),
-          const SizedBox(height: 12),
-          Text(content),
-          if (imageUrls.isNotEmpty) ...[
-            const SizedBox(height: 12),
-            SizedBox(
-              height: 180,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                itemCount: imageUrls.length,
-                separatorBuilder: (context, index) => const SizedBox(width: 8),
-                itemBuilder: (context, index) => ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
-                  child: Image.asset(
-                    imageUrls[index] as String,
-                    fit: BoxFit.cover,
-                    width: 180,
-                  ),
-                ),
-              ),
-            ),
-          ],
-          const SizedBox(height: 16),
-          const Divider(height: 1, thickness: 1, color: Colors.black12),
-        ],
-      ),
-    );
-  }
-
   Widget _buildDetailView() {
     final List<dynamic> currentComments = _selectedTweet!['comments'];
 
@@ -896,10 +838,87 @@ class _TimelinePageState extends State<TimelinePage> {
           currentComments.length,
           (index) => Padding(
             padding: const EdgeInsets.all(12.0),
+            // 💡 コメント部分カードも上記の修正が自動で適用されます
             child: _buildTweetCard(currentComments[index]),
           ),
         ),
       ],
+    );
+  }
+  Widget _buildTweetCard(Map<String, dynamic> tweet) {
+    final String name = tweet['name'] ?? '';
+    final String username = tweet['username'] ?? '';
+    final String content = tweet['content'] ?? '';
+    final List<dynamic> imageUrls = tweet['imageUrls'] ?? [];
+
+    return Padding(
+      // 👇 カード全体の左余白を16から「0」にして画面の端に合わせたい場合は、ここを 0 にしてください
+      padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // 💡 余計な Row や Expanded を無くし、直接 Column を配置して左端に詰めました
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                name, 
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+              ),
+              const SizedBox(height: 2),
+              Text(
+                username, 
+                style: const TextStyle(color: Colors.black54, fontSize: 14),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          // 本文も左端からスタートします
+          Text(content, style: const TextStyle(fontSize: 15)),
+          
+          // 💡 画像を表示する部分（ListViewのまわり）です
+          if (imageUrls.isNotEmpty) ...[
+            const SizedBox(height: 12),
+            SizedBox(
+              height: 180,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemCount: imageUrls.length,
+                separatorBuilder: (context, index) => const SizedBox(width: 8),
+                itemBuilder: (context, index) {
+                  final String path = imageUrls[index] as String;
+                  
+                  return ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset(
+                      path,
+                      fit: BoxFit.cover,
+                      width: 180,
+                      // 👇 読み込みエラーの時に、URLがどうなっているか画面上で確認できるようにテキストを追加します
+                      errorBuilder: (context, error, stackTrace) {
+                        return Container(
+                          width: 180,
+                          color: Colors.grey[200],
+                          alignment: Alignment.center,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(
+                              'エラー:\n$path',
+                              style: const TextStyle(fontSize: 10, color: Colors.red),
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ],
+      ),
     );
   }
 }
