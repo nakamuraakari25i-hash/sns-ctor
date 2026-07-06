@@ -458,8 +458,8 @@ class _TimelinePageState extends State<TimelinePage> {
            {
              'name':'れんな',
              'username':'@renna_',
-             'content':'ブロンなくなっちゃった（ ;  ; ）誰かペイペイください',
-             'imageUrls':[],
+             'content':'なくなっちゃった（ ;  ; ）誰かペイペイください',
+             'imageUrls':['assets/images/temp_image_182455B3-78B0-41CB-8249-1AEB69EEFCAE.jpg'],
              'comments':[
                {
                  'name':'マイストン',
@@ -652,6 +652,27 @@ class _TimelinePageState extends State<TimelinePage> {
                  'imageUrls':[]
                }
              ]
+           },
+           {
+            'name':'吉田',
+            'username':'@yo_sshiii',
+            'content':'テレビや大手のニュースが揃って同じことばかり報道している時は、裏で別の重要な法案がコッソリ通されている証拠。\n彼らは国民に目隠しをして、都合の悪い真実から目を逸らさせようとしている。\nそろそろ多くの人がこの「作られた現実」に気づくべき。\n\n#メディアの嘘 #真実を知る #拡散希望',
+            'imageUrls':[],
+            'comments':[]
+           },
+           {
+            'name':'育児奮闘中の母マメちゃん',
+            'username':'@mamam_mamechan',
+            'content':'最近、空を見上げると不自然な形の雲ばかり。ただの飛行機雲だと思ってる人は危機感がなさすぎる。\nあれは上空から有害な化学物質を撒いて、私たちの健康や天候をコントロールするための実験（ケム・トレイル）です。\n国も製薬会社も本当のことは絶対に言わない。\n#気象操作\n#目覚めよ日本人\n#陰謀',
+            'imageUrls':[],
+            'comments':[]
+           },
+           {
+            'name':'佐野セブン',
+            'username':'@777_sano.',
+            'content':'私たちが学校で習ってきた「歴史」は、世界を裏から牛耳る一部の特権階級、ディープステートにとって都合のいいように書き換えられたフィクションにすぎない。常識という名の洗脳を解き、隠された古代の真実やフリーエネルギーの存在に目を向けなければ、いつまでも搾取され続けるだけだ。\n#ディープステート#世界の真実#洗脳を解け',
+            'imageUrls':[],
+            'comments':[]
            }
   ];
 
@@ -738,7 +759,7 @@ class _TimelinePageState extends State<TimelinePage> {
     String text = _tweets[index]['content']!;
     
     try {
-      await _flutterTts.setVolume(0.1); // 💡 一覧時は少し控えめな音量
+      await _flutterTts.setVolume(0.3); // 💡 一覧時は少し控えめな音量
     } catch (_) {}
     
     await _executeSpeak(text);
