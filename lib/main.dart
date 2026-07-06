@@ -654,7 +654,7 @@ class _TimelinePageState extends State<TimelinePage> {
     _initTts();
   }
 
-  Future<void> _initTts() async {
+    Future<void> _initTts() async {
     try {
       await _flutterTts.setLanguage("ja-JP");
       await _flutterTts.setSpeechRate(1.2);
@@ -672,14 +672,26 @@ class _TimelinePageState extends State<TimelinePage> {
         final List<dynamic> currentComments = _selectedTweet!['comments'];
         
         if (_detailSpeakStep >= 1 && _detailSpeakStep <= currentComments.length) {
-          final nextCommentText = currentComments[_detailSpeakStep - 1]['content']!;
+          // 💡 currentComments[index] は Map なので、そこから確実に「'content'」の文字列だけを抜き取ります
+          final dynamic rawComment = currentComments[_detailSpeakStep - 1];
+          String nextCommentText = "";
+          
+          if (rawComment is Map) {
+            nextCommentText = rawComment['content']?.toString() ?? "";
+          } else {
+            nextCommentText = rawComment.toString();
+          }
+          
           _detailSpeakStep++;
           await _executeSpeak(nextCommentText);
         } else {
           await Future.delayed(const Duration(milliseconds: 1500));
           if (_selectedTweet == null) return;
           _detailSpeakStep = 1;
-          await _executeSpeak(_selectedTweet!['content']!);
+          
+          // 💡 ここも確実に文字列だけを渡します
+          final String mainContent = _selectedTweet!['content']?.toString() ?? "";
+          await _executeSpeak(mainContent);
         }
         return; 
       }
@@ -696,6 +708,7 @@ class _TimelinePageState extends State<TimelinePage> {
       }
     });
   }
+
 
   Future<void> _executeSpeak(String text) async {
     if (text.isEmpty) return;
