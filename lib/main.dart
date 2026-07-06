@@ -665,31 +665,33 @@ class _TimelinePageState extends State<TimelinePage> {
       debugPrint("TTS初期化エラー: $e");
     }
 
+   // 💡 _initTts() の中の _flutterTts.setCompletionHandler の中身です。
+// selectedTweet が null でない（詳細画面である）ときの再生直前に音量設定を追加します。
+
     _flutterTts.setCompletionHandler(() async {
       if (!mounted) return;
 
       if (_selectedTweet != null) {
         final List<dynamic> currentComments = _selectedTweet!['comments'];
         
+        try {
+          await _flutterTts.setVolume(1.0); // 💡 詳細画面の中のコメント読み上げも大音量をキープ
+        } catch (_) {}
+
         if (_detailSpeakStep >= 1 && _detailSpeakStep <= currentComments.length) {
-          // 💡 currentComments[index] は Map なので、そこから確実に「'content'」の文字列だけを抜き取ります
           final dynamic rawComment = currentComments[_detailSpeakStep - 1];
           String nextCommentText = "";
-          
           if (rawComment is Map) {
             nextCommentText = rawComment['content']?.toString() ?? "";
           } else {
             nextCommentText = rawComment.toString();
           }
-          
           _detailSpeakStep++;
           await _executeSpeak(nextCommentText);
         } else {
           await Future.delayed(const Duration(milliseconds: 1500));
           if (_selectedTweet == null) return;
           _detailSpeakStep = 1;
-          
-          // 💡 ここも確実に文字列だけを渡します
           final String mainContent = _selectedTweet!['content']?.toString() ?? "";
           await _executeSpeak(mainContent);
         }
@@ -707,6 +709,7 @@ class _TimelinePageState extends State<TimelinePage> {
         _speakTimeline(0);
       }
     });
+
   }
 
 
@@ -723,9 +726,13 @@ class _TimelinePageState extends State<TimelinePage> {
     if (!mounted || !_isTimelineLoopActive) return;
     _currentSpeakingIndex = index;
     String text = _tweets[index]['content']!;
+    
+    try {
+      await _flutterTts.setVolume(0.5); // 💡 一覧時は少し控えめな音量
+    } catch (_) {}
+    
     await _executeSpeak(text);
   }
-
   void _speakDetail(String text) async {
     _isTimelineLoopActive = false;
     _currentSpeakingIndex = -1;
@@ -736,6 +743,11 @@ class _TimelinePageState extends State<TimelinePage> {
     if (text.isNotEmpty) {
       _detailSpeakStep = 1;
       await Future.delayed(const Duration(milliseconds: 250));
+      
+      try {
+        await _flutterTts.setVolume(1.0); // 💡 クリックした後は大音量
+      } catch (_) {}
+      
       await _executeSpeak(text);
     }
   }
@@ -858,19 +870,19 @@ class _TimelinePageState extends State<TimelinePage> {
       ],
     );
   }
-  Widget _buildTweetCard(Map<String, dynamic> tweet) {
+    Widget _buildTweetCard(Map<String, dynamic> tweet) {
     final String name = tweet['name'] ?? '';
     final String username = tweet['username'] ?? '';
     final String content = tweet['content'] ?? '';
     final List<dynamic> imageUrls = tweet['imageUrls'] ?? [];
 
     return Padding(
-      // 👇 カード全体の左余白を16から「0」にして画面の端に合わせたい場合は、ここを 0 にしてください
-      padding: const EdgeInsets.symmetric(horizontal: 0.0, vertical: 8.0),
+      // 👇 左右に「16」の余白を入れて、画面の端にピタッとくっつかないようにします
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 💡 余計な Row や Expanded を無くし、直接 Column を配置して左端に詰めました
+          // 💡 名前とユーザーネームの塊です。無駄な余白を消したまま、画面端からは16浮きます
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
@@ -887,10 +899,8 @@ class _TimelinePageState extends State<TimelinePage> {
             ],
           ),
           const SizedBox(height: 12),
-          // 本文も左端からスタートします
           Text(content, style: const TextStyle(fontSize: 15)),
           
-          // 💡 画像を表示する部分（ListViewのまわり）です
           if (imageUrls.isNotEmpty) ...[
             const SizedBox(height: 12),
             SizedBox(
@@ -908,20 +918,11 @@ class _TimelinePageState extends State<TimelinePage> {
                       path,
                       fit: BoxFit.cover,
                       width: 180,
-                      // 👇 読み込みエラーの時に、URLがどうなっているか画面上で確認できるようにテキストを追加します
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           width: 180,
-                          color: Colors.grey[200],
-                          alignment: Alignment.center,
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              'エラー:\n$path',
-                              style: const TextStyle(fontSize: 10, color: Colors.red),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
+                          color: Colors.grey,
+                          child: const Icon(Icons.broken_image, color: Colors.grey),
                         );
                       },
                     ),
@@ -930,6 +931,8 @@ class _TimelinePageState extends State<TimelinePage> {
               ),
             ),
           ],
+          const SizedBox(height: 16),
+          const Divider(height: 1, thickness: 1, color: Colors.black12),
         ],
       ),
     );
