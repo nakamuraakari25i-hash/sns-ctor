@@ -6,11 +6,17 @@ import 'package:flutter/material.dart' show Alignment, AppBar, Axis, BuildContex
 class FlutterTts {
   Function? _completionHandler;
   bool _awaitSpeakCompletion = false;
+  double _currentVolume = 1.0; // 💡 今の音量を記憶する変数を追加
 
   Future<void> setLanguage(String language) async {}
   Future<void> setSpeechRate(double rate) async {}
   Future<void> setPitch(double pitch) async {}
-  Future<void> setVolume(double volume) async {}
+  
+  // 💡 音量の命令が来たら、それをしっかり記憶するようにします
+  Future<void> setVolume(double volume) async {
+    _currentVolume = volume;
+  }
+  
   Future<void> awaitSpeakCompletion(bool awaitCompletion) async {
     _awaitSpeakCompletion = awaitCompletion;
   }
@@ -21,6 +27,10 @@ class FlutterTts {
 
   Future<void> speak(String text) async {
     final utterance = html.SpeechSynthesisUtterance(text)..lang = 'ja-JP';
+    
+    // 👇 ここが重要！記憶した音量（_currentVolume）をブラウザの音声に直接叩き込みます
+    utterance.volume = _currentVolume; 
+
     final completer = _awaitSpeakCompletion ? Completer<void>() : null;
 
     utterance.onEnd.listen((html.Event event) {
