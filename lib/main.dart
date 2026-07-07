@@ -673,6 +673,59 @@ class _TimelinePageState extends State<TimelinePage> {
             'content':'私たちが学校で習ってきた「歴史」は、世界を裏から牛耳る一部の特権階級、ディープステートにとって都合のいいように書き換えられたフィクションにすぎない。常識という名の洗脳を解き、隠された古代の真実やフリーエネルギーの存在に目を向けなければ、いつまでも搾取され続けるだけだ。\n#ディープステート#世界の真実#洗脳を解け',
             'imageUrls':[],
             'comments':[]
+           },
+           {
+            'name':'SKLA',
+            'username':'@s_k_l_a03876',
+            'content':'ポプコレの虹乃ねのブスすぎwこれはアイドル失格だわw',
+            'imageUrls':['assets/images/IMG_4796.PNG'],
+            'comments':[
+              {
+               'name':'りのん🍭🌈',
+               'username':'@ne_no_chi_love',
+               'content':'は？これは動画の中の一瞬だし他撮りだからしょうがないでしょ？ねのちの自撮りこれだから',
+               'imageUrls':['assets/images/IMG_4798.PNG']
+              },
+              {
+               'name':'nanashi',
+               'username':'@ekfjhaui',
+               'content':'お前よりマシ',
+               'imageUrls':[]
+              },
+              {
+                'name':'醤油味噌ポン漬け',
+                'username':'@shooooooo_kdasu',
+                'content':'彼女これだったらガチ萎え',
+                'imageUrls':[]
+              },
+              {
+                'name':'Loousvelt',
+                'username':'@loous_velt',
+                'content':'彼女はとても美しい女性です',
+                'imageUrls':[]
+              }
+            ]
+           },
+           {
+            'name':'りのん🍭🌈',
+            'username':'@ne_no_chi_love',
+            'content':'今日のライブのねのち可愛すぎた💕\nレスいっぱいくれてありがとう😭大好きだよ❣️\n#ポプコレ　#虹乃ねの',
+            'imageUrls':['assets/images/IMG_4800.PNG'],
+            'comments':[]
+           },
+           {
+            'name':'ぬこさま',
+            'username':'@nyaaan_nuko',
+            'content':'冷凍エビ落ちてる。',
+            'imageUrls':['assets/images/3CBF8B39-4D65-47B6-A2E0-75939B1DFB47.JPG'],
+            'comments':[
+              {
+                'name':'ささのさけ',
+                'username':'@sakejdie',
+                'content':'',
+                'imageUrls':['assets/images/IMG_4811.JPG']
+              }
+            ]
            }
   ];
 
@@ -874,7 +927,7 @@ class _TimelinePageState extends State<TimelinePage> {
     );
   }
 
-  Widget _buildDetailView() {
+   Widget _buildDetailView() {
     final List<dynamic> currentComments = _selectedTweet!['comments'];
 
     return ListView(
@@ -894,13 +947,15 @@ class _TimelinePageState extends State<TimelinePage> {
           currentComments.length,
           (index) => Padding(
             padding: const EdgeInsets.all(12.0),
-            // 💡 コメント部分カードも上記の修正が自動で適用されます
+            // 💡 修正済みの _buildTweetCard にコメントのデータを渡すことで、
+            // 左右の余白（パディング）やアセット画像表示、エラー時の文字表示が自動で適用されます
             child: _buildTweetCard(currentComments[index]),
           ),
         ),
       ],
     );
   }
+
     Widget _buildTweetCard(Map<String, dynamic> tweet) {
     final String name = tweet['name'] ?? '';
     final String username = tweet['username'] ?? '';
